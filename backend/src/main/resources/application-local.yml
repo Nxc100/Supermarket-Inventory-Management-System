@@ -1,0 +1,4 @@
+# Secrets are supplied through environment variables or backend/application-local.yml.
+spring:
+  config:
+    import: optional:file:./application-local.yml

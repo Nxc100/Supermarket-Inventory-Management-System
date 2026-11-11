@@ -1,0 +1,47 @@
+package com.supermarket.inventory.purchase.entity;
+
+import com.supermarket.inventory.purchase.enums.*;
+import java.math.BigDecimal;
+import java.time.*;
+
+public record PurchaseOrder(
+    Long id,
+    String orderNo,
+    Long supplierId,
+    String supplierName,
+    String supplierContact,
+    String supplierPhone,
+    String supplierAddress,
+    Long operatorId,
+    String operatorName,
+    PurchaseStatus status,
+    long totalQty,
+    long totalReceivedQty,
+    BigDecimal totalAmount,
+    LocalDate expectedArrivalDate,
+    LocalDateTime arrivedAt,
+    LocalDateTime firstSubmittedAt,
+    LocalDateTime submittedAt,
+    Long reviewedBy,
+    String reviewerName,
+    LocalDateTime reviewedAt,
+    String rejectionReason,
+    LocalDateTime stockedAt,
+    Long closedBy,
+    LocalDateTime closedAt,
+    String closeReason,
+    Long reversedBy,
+    LocalDateTime reversedAt,
+    String reverseReason,
+    ReconcileStatus reconcileStatus,
+    BigDecimal externalTotalAmount,
+    String reconcileReference,
+    String reconcileDifference,
+    String reconcileResolution,
+    Long reconciledBy,
+    LocalDateTime reconciledAt,
+    int reconcileVersion,
+    String remark,
+    long rowVersion,
+    LocalDateTime createdAt,
+    LocalDateTime updatedAt) {}

@@ -1,0 +1,304 @@
+{
+  "database": "supermarket_inventory_ai_stream_dbcheck",
+  "mysql_version": "8.0.34",
+  "validated_at": "2026-11-11T11:23:09.092769+08:00",
+  "passed": 59,
+  "failed": 0,
+  "checks": [
+    {
+      "test": "V01_product_equals_batches",
+      "result": "PASS",
+      "detail": "violations=0"
+    },
+    {
+      "test": "V02_batch_equals_ledger",
+      "result": "PASS",
+      "detail": "violations=0"
+    },
+    {
+      "test": "V03_product_equals_ledger",
+      "result": "PASS",
+      "detail": "violations=0"
+    },
+    {
+      "test": "V04_batch_ledger_chain",
+      "result": "PASS",
+      "detail": "violations=0"
+    },
+    {
+      "test": "V05_product_ledger_chain",
+      "result": "PASS",
+      "detail": "violations=0"
+    },
+    {
+      "test": "V06_purchase_header_totals",
+      "result": "PASS",
+      "detail": "violations=0"
+    },
+    {
+      "test": "V07_posted_batch_integrity",
+      "result": "PASS",
+      "detail": "violations=0"
+    },
+    {
+      "test": "V08_historical_receipt_dates",
+      "result": "PASS",
+      "detail": "violations=0"
+    },
+    {
+      "test": "V09_purchase_in_events",
+      "result": "PASS",
+      "detail": "violations=0"
+    },
+    {
+      "test": "V10_purchase_reversal_events",
+      "result": "PASS",
+      "detail": "violations=0"
+    },
+    {
+      "test": "V11_sale_header_totals",
+      "result": "PASS",
+      "detail": "violations=0"
+    },
+    {
+      "test": "V12_sale_allocation_totals",
+      "result": "PASS",
+      "detail": "violations=0"
+    },
+    {
+      "test": "V13_sale_out_events",
+      "result": "PASS",
+      "detail": "violations=0"
+    },
+    {
+      "test": "V14_sale_correction_events",
+      "result": "PASS",
+      "detail": "violations=0"
+    },
+    {
+      "test": "V15_sale_valid_at_event_time",
+      "result": "PASS",
+      "detail": "violations=0"
+    },
+    {
+      "test": "V16_current_reconciliation",
+      "result": "PASS",
+      "detail": "violations=0"
+    },
+    {
+      "test": "V17_freeze_points_to_active_task",
+      "result": "PASS",
+      "detail": "violations=0"
+    },
+    {
+      "test": "V18_active_task_has_freeze",
+      "result": "PASS",
+      "detail": "violations=0"
+    },
+    {
+      "test": "V19_active_snapshot_unchanged",
+      "result": "PASS",
+      "detail": "violations=0"
+    },
+    {
+      "test": "V20_submitted_actual_complete",
+      "result": "PASS",
+      "detail": "violations=0"
+    },
+    {
+      "test": "V21_completed_stocktake_events",
+      "result": "PASS",
+      "detail": "violations=0"
+    },
+    {
+      "test": "V22_active_scope_all_batches",
+      "result": "PASS",
+      "detail": "violations=0"
+    },
+    {
+      "test": "V23_saleable_not_negative",
+      "result": "PASS",
+      "detail": "violations=0"
+    },
+    {
+      "test": "V24_ai_operator_scope",
+      "result": "PASS",
+      "detail": "violations=0"
+    },
+    {
+      "test": "V25_role_permission_subset",
+      "result": "PASS",
+      "detail": "violations=0"
+    },
+    {
+      "test": "V26_sale_events_equal_line_net",
+      "result": "PASS",
+      "detail": "violations=0"
+    },
+    {
+      "test": "V27_placeholder_is_relative",
+      "result": "PASS",
+      "detail": "violations=0"
+    },
+    {
+      "test": "V28_role_catalog_membership",
+      "result": "PASS",
+      "detail": "violations=0"
+    },
+    {
+      "test": "V29_ai_usage_consistency",
+      "result": "PASS",
+      "detail": "violations=0"
+    },
+    {
+      "test": "N01_bcrypt_passwords",
+      "result": "PASS",
+      "detail": "8个测试账号摘要逐个验证"
+    },
+    {
+      "test": "N02_unique_username",
+      "result": "PASS",
+      "detail": "expected=1062,actual=1062"
+    },
+    {
+      "test": "N03_unique_barcode",
+      "result": "PASS",
+      "detail": "expected=1062,actual=1062"
+    },
+    {
+      "test": "N04_nonnegative_product",
+      "result": "PASS",
+      "detail": "expected=3819,actual=3819"
+    },
+    {
+      "test": "N05_nonnegative_batch",
+      "result": "PASS",
+      "detail": "expected=3819,actual=3819"
+    },
+    {
+      "test": "N06_movement_arithmetic",
+      "result": "PASS",
+      "detail": "expected=3819,actual=3819"
+    },
+    {
+      "test": "N07_cross_product_allocation",
+      "result": "PASS",
+      "detail": "expected=1452,actual=1452"
+    },
+    {
+      "test": "N08_partial_external_values",
+      "result": "PASS",
+      "detail": "expected=3819,actual=3819"
+    },
+    {
+      "test": "N09_invalid_expiry",
+      "result": "PASS",
+      "detail": "expected=3819,actual=3819"
+    },
+    {
+      "test": "N10_negative_actual",
+      "result": "PASS",
+      "detail": "expected=3819,actual=3819"
+    },
+    {
+      "test": "N11_missing_difference_reason",
+      "result": "PASS",
+      "detail": "expected=3819,actual=3819"
+    },
+    {
+      "test": "N12_empty_ai_success",
+      "result": "PASS",
+      "detail": "expected=3819,actual=3819"
+    },
+    {
+      "test": "N13_duplicate_idempotency",
+      "result": "PASS",
+      "detail": "expected=1062,actual=1062"
+    },
+    {
+      "test": "N14_cross_day_correction",
+      "result": "PASS",
+      "detail": "expected=3819,actual=3819"
+    },
+    {
+      "test": "N15_cashier_exceeds_ceiling",
+      "result": "PASS",
+      "detail": "expected=3819,actual=3819"
+    },
+    {
+      "test": "N16_delete_referenced_product",
+      "result": "PASS",
+      "detail": "expected=1451,actual=1451"
+    },
+    {
+      "test": "N17_delete_referenced_category",
+      "result": "PASS",
+      "detail": "expected=1451,actual=1451"
+    },
+    {
+      "test": "N18_duplicate_stock_event",
+      "result": "PASS",
+      "detail": "expected=1062,actual=1062"
+    },
+    {
+      "test": "N19_missing_reverse_reason",
+      "result": "PASS",
+      "detail": "expected=3819,actual=3819"
+    },
+    {
+      "test": "N20_stocked_batch_missing_received",
+      "result": "PASS",
+      "detail": "expected=3819,actual=3819"
+    },
+    {
+      "test": "N21_null_vs_zero",
+      "result": "PASS",
+      "detail": "NULL代表未填；0产生-20差异"
+    },
+    {
+      "test": "N22_freeze_preserves_saleable",
+      "result": "PASS",
+      "detail": "冻结只禁交易，不制造零可售库存"
+    },
+    {
+      "test": "N23_dynamic_expiry_without_job",
+      "result": "PASS",
+      "detail": "次日禁售但账面仍4，无自动清零"
+    },
+    {
+      "test": "N24_bundle_rollback",
+      "result": "PASS",
+      "detail": "余额和批次均恢复到5"
+    },
+    {
+      "test": "N25_product_lock_competition",
+      "result": "PASS",
+      "detail": "第二连接等待超时1205，事务协议可串行化库存写"
+    },
+    {
+      "test": "N26_delete_unreferenced",
+      "result": "PASS",
+      "detail": "未引用商品、供应商、用户、分类均可物理删除"
+    },
+    {
+      "test": "N27_split_sale_no_double_amount",
+      "result": "PASS",
+      "detail": "12瓶跨两批次，销售额仍为60元"
+    },
+    {
+      "test": "N28_correction_net_zero",
+      "result": "PASS",
+      "detail": "原事件和反向事件并存，净额0"
+    },
+    {
+      "test": "N29_price_snapshot",
+      "result": "PASS",
+      "detail": "历史7.50，当前9.00"
+    },
+    {
+      "test": "N30_fixture_flag",
+      "result": "PASS",
+      "detail": "所有AI种子明确标记为夹具"
+    }
+  ]
+}

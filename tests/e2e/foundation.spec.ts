@@ -1,0 +1,136 @@
+import { test, expect, type Page } from '../../frontend/test-support/playwright'
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
+
+async function login(page: Page, username: string, password = 'Test123456') {
+  await page.goto('/login')
+  await page.getByRole('textbox', { name: '*用户名', exact: true }).fill(username)
+  await page.getByRole('textbox', { name: '*密码', exact: true }).fill(password)
+  await page.getByRole('button', { name: '登录', exact: true }).click()
+  await expect(page.getByRole('heading', { name: /欢迎回来/ })).toBeVisible()
+}
+async function logout(page: Page) {
+  await page.getByRole('button', { name: '退出登录', exact: true }).click()
+  await page.getByRole('dialog').getByRole('button', { name: '退出登录', exact: true }).click()
+  await expect(page).toHaveURL(/\/login/)
+}
+
+test('three roles, direct route rejection and logout history protection', async ({ page }) => {
+  for (const username of ['admin', 'buyer01', 'cashier01']) {
+    await login(page, username)
+    if (username === 'admin') {
+      await expect(page.getByRole('menuitem', { name: '商品分类' })).toBeVisible()
+    } else {
+      await expect(page.getByRole('menuitem', { name: '商品分类' })).toHaveCount(0)
+      await page.goto('/catalog/categories')
+      await expect(page.getByRole('main').getByText('访问受限', { exact: true })).toBeVisible()
+    }
+    await page.getByRole('menuitem', { name: '个人中心' }).click()
+    await logout(page)
+    await page.goBack()
+    await expect(page).toHaveURL(/\/login/)
+  }
+})
+
+test('category lifecycle, duplicate failure preservation, filter, status and detail', async ({ page }) => {
+  await login(page, 'admin')
+  await page.getByRole('menuitem', { name: '商品分类' }).click()
+  const code = `E2E_${Date.now()}`
+  const categoryName = `页面分类${code.slice(-10)}`
+  await page.getByRole('button', { name: '新增分类' }).click()
+  const dialog = page.getByRole('dialog')
+  await dialog.getByRole('textbox', { name: '分类编码' }).fill('C001')
+  await dialog.getByRole('textbox', { name: '分类名称' }).fill(categoryName)
+  await dialog.getByRole('button', { name: '保存分类' }).click()
+  await expect(page.getByText(/编码、条码或名称重复/)).toBeVisible()
+  await expect(dialog.getByRole('textbox', { name: '分类名称' })).toHaveValue(categoryName)
+  await dialog.getByRole('textbox', { name: '分类编码' }).fill(code)
+  await dialog.getByRole('button', { name: '保存分类' }).click()
+  await expect(dialog).toBeHidden()
+  await page.getByRole('textbox', { name: '分类关键词' }).fill(code)
+  await page.getByRole('button', { name: '查询', exact: true }).click()
+  const row = page.getByRole('row').filter({ hasText: code })
+  await expect(row).toContainText(categoryName)
+  await row.getByRole('button', { name: '停用', exact: true }).click()
+  await page.getByRole('dialog').getByRole('button', { name: '停用分类' }).click()
+  await expect(row).toContainText('已停用')
+  await row.getByRole('button', { name: '详情' }).click()
+  await expect(page.getByRole('dialog')).toContainText(code)
+  await page.getByRole('dialog').getByRole('button', { name: '关闭此对话框' }).click()
+  await row.getByRole('button', { name: '删除', exact: true }).click()
+  await page.getByRole('dialog').getByRole('button', { name: '删除分类', exact: true }).click()
+  await expect(page.getByText('暂无符合条件的分类')).toBeVisible()
+})
+
+test('profile whitelist, failed validation and persistence across reload', async ({ page }) => {
+  await login(page, 'buyer02')
+  await page.getByRole('menuitem', { name: '个人中心' }).click()
+  await page.getByRole('button', { name: '编辑资料' }).click()
+  const original = await page.getByRole('textbox', { name: '*姓名', exact: true }).inputValue()
+  await page.getByRole('textbox', { name: '手机号' }).fill('123')
+  await page.getByRole('button', { name: '保存资料' }).click()
+  await expect(page.getByText('请输入11位中国大陆手机号')).toBeVisible()
+  await page.getByRole('button', { name: '取消', exact: true }).click()
+  await page.getByRole('button', { name: '编辑资料' }).click()
+  await page.getByRole('textbox', { name: '*姓名', exact: true }).fill('页面资料验证')
+  await page.getByRole('button', { name: '保存资料' }).click()
+  await expect(page.locator('.account')).toContainText('页面资料验证')
+  await page.reload()
+  await expect(page.getByRole('textbox', { name: '*姓名', exact: true })).toHaveValue('页面资料验证')
+  await page.getByRole('button', { name: '编辑资料' }).click()
+  await page.getByRole('textbox', { name: '*姓名', exact: true }).fill(original)
+  await page.getByRole('button', { name: '保存资料' }).click()
+  await expect(page.locator('.account')).toContainText(original)
+})
+
+test('password change verifies old password, logs out and accepts the new password', async ({ page }) => {
+  await login(page, 'unused01')
+  await page.getByRole('menuitem', { name: '个人中心' }).click()
+  const oldPassword = page.getByRole('textbox', { name: '*旧密码', exact: true })
+  const newPassword = page.getByRole('textbox', { name: '*新密码', exact: true })
+  const confirmPassword = page.getByRole('textbox', { name: '*确认新密码', exact: true })
+  await oldPassword.fill('wrong')
+  await newPassword.fill('UiNext123456')
+  await confirmPassword.fill('UiNext123456')
+  await page.getByRole('button', { name: '修改密码', exact: true }).click()
+  await expect(page.getByText('旧密码错误', { exact: true })).toBeVisible()
+  await expect(newPassword).toHaveValue('UiNext123456')
+  await oldPassword.fill('Test123456')
+  await page.getByRole('button', { name: '修改密码', exact: true }).click()
+  await expect(page).toHaveURL(/\/login/)
+  await login(page, 'unused01', 'UiNext123456')
+  await page.getByRole('menuitem', { name: '个人中心' }).click()
+  await oldPassword.fill('UiNext123456')
+  await newPassword.fill('Test123456')
+  await confirmPassword.fill('Test123456')
+  await page.getByRole('button', { name: '修改密码', exact: true }).click()
+  await expect(page).toHaveURL(/\/login/)
+})
+
+test('avatar preview cancellation, upload persistence, rejection and default restoration', async ({ page }) => {
+  await login(page, 'cashier02')
+  await page.getByRole('menuitem', { name: '个人中心' }).click()
+  const input = page.locator('input[type=file]')
+  const file = { name: 'avatar.png', mimeType: 'image/png', buffer: readFileSync(resolve('../tests/e2e/fixtures/avatar.png')) }
+  await input.setInputFiles(file)
+  await expect(page.getByRole('img', { name: '待上传头像预览' })).toBeVisible()
+  await page.getByRole('dialog').getByRole('button', { name: '取消', exact: true }).click()
+  await expect(page.getByRole('img', { name: '当前头像' })).toHaveCount(0)
+  await input.setInputFiles(file)
+  await page.getByRole('dialog').getByRole('button', { name: '确认上传' }).click()
+  await expect(page.getByRole('dialog')).toBeHidden()
+  await expect(page.getByRole('img', { name: '当前头像' })).toHaveCount(2)
+  const src = await page.locator('.account img').getAttribute('src')
+  await page.reload()
+  await expect(page.locator('.account img')).toHaveAttribute('src', src ?? '')
+  await logout(page)
+  await login(page, 'cashier02')
+  await page.getByRole('menuitem', { name: '个人中心' }).click()
+  await expect(page.locator('.account img')).toHaveAttribute('src', src ?? '')
+  await input.setInputFiles({ name:'fake.png',mimeType:'image/png',buffer:Buffer.from('<script>fake image</script>') })
+  await expect(page.getByText('图片无法正常解码', { exact: true })).toBeVisible()
+  await expect(page.locator('.account img')).toHaveAttribute('src', src ?? '')
+  await page.getByRole('button', { name:'使用默认头像',exact:true }).click()
+  await page.getByRole('dialog').getByRole('button', { name:'使用默认头像',exact:true }).click()
+  await expect(page.getByRole('img', { name:'当前头像' })).toHaveCount(0)
+})

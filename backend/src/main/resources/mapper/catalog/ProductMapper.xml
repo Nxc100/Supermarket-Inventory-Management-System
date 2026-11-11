@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supermarket.inventory.catalog.mapper.ProductMapper">
+  <sql id="references">(EXISTS(SELECT 1 FROM purchase_item i WHERE i.product_id=p.id) OR EXISTS(SELECT 1 FROM sale_item s WHERE s.product_id=p.id) OR EXISTS(SELECT 1 FROM stocktake_item t WHERE t.product_id=p.id) OR EXISTS(SELECT 1 FROM stock_movement m WHERE m.product_id=p.id))</sql>
+  <sql id="archiveColumns">CAST(p.id AS CHAR) id,p.code,p.barcode,p.name,CAST(p.category_id AS CHAR) category_id,c.name category_name,p.specification,p.unit,p.reference_cost,p.sale_price,p.image_path,p.manages_expiry,p.shelf_life_days,p.near_expiry_days,p.stock_lower_limit,p.can_purchase,p.can_sell,p.enabled,p.stock_qty,<include refid="references"/> referenced,p.remark,p.created_at</sql>
+  <sql id="filters">
+    <if test="keyword != ''">AND (CONVERT(p.code USING utf8mb4) LIKE CONCAT('%',#{keyword},'%') OR p.name LIKE CONCAT('%',#{keyword},'%') OR CONVERT(p.barcode USING utf8mb4)=#{keyword})</if>
+    <if test="categoryId != null">AND p.category_id=#{categoryId}</if>
+    <if test="enabled != null">AND p.enabled=#{enabled}</if>
+    <if test="managesExpiry != null">AND p.manages_expiry=#{managesExpiry}</if>
+    <if test="canPurchase != null">AND p.can_purchase=#{canPurchase}</if>
+    <if test="canSell != null">AND p.can_sell=#{canSell}</if>
+  </sql>
+  <select id="page" resultType="com.supermarket.inventory.catalog.vo.ProductVO">SELECT <include refid="archiveColumns"/> FROM product p JOIN category c ON c.id=p.category_id <where><include refid="filters"/></where> ORDER BY p.created_at DESC,p.id DESC LIMIT #{pageSize} OFFSET #{offset}</select>
+  <select id="count" resultType="long">SELECT COUNT(*) FROM product p <where><include refid="filters"/></where></select>
+  <select id="find" resultType="com.supermarket.inventory.catalog.vo.ProductVO">SELECT <include refid="archiveColumns"/> FROM product p JOIN category c ON c.id=p.category_id WHERE p.id=#{id}</select>
+  <select id="referenced" resultType="boolean">SELECT <include refid="references"/> FROM product p WHERE p.id=#{id}</select>
+  <update id="update">UPDATE product SET code=#{code},barcode=#{barcode},name=#{name},category_id=#{categoryId},specification=#{specification},unit=#{unit},reference_cost=#{referenceCost},sale_price=#{salePrice},manages_expiry=#{managesExpiry},shelf_life_days=#{shelfLifeDays},near_expiry_days=#{nearExpiryDays},stock_lower_limit=#{stockLowerLimit},can_purchase=#{canPurchase},can_sell=#{canSell},remark=#{remark} WHERE id=#{id}</update>
+  <select id="purchaseLookup" resultType="com.supermarket.inventory.catalog.vo.PurchaseProductVO">SELECT CAST(p.id AS CHAR) id,p.code,p.barcode,p.name,CAST(p.category_id AS CHAR) category_id,c.name category_name,p.specification,p.unit,p.reference_cost,p.manages_expiry,p.shelf_life_days,p.image_path,(p.frozen_stocktake_id IS NOT NULL) frozen FROM product p JOIN category c ON c.id=p.category_id WHERE p.enabled=1 AND p.can_purchase=1 <include refid="filters"/> ORDER BY p.created_at DESC,p.id DESC LIMIT #{pageSize} OFFSET #{offset}</select>
+  <select id="purchaseLookupCount" resultType="long">SELECT COUNT(*) FROM product p WHERE p.enabled=1 AND p.can_purchase=1 <include refid="filters"/></select>
+  <select id="saleLookup" resultType="com.supermarket.inventory.catalog.vo.SaleProductVO">
+    SELECT CAST(p.id AS CHAR) id,p.code,p.barcode,p.name,CAST(p.category_id AS CHAR) category_id,c.name category_name,p.specification,p.unit,p.sale_price,p.image_path,COALESCE(b.qty,0) saleable_qty,(p.frozen_stocktake_id IS NOT NULL) frozen FROM product p JOIN category c ON c.id=p.category_id LEFT JOIN (SELECT i.product_id,SUM(i.stock_qty) qty FROM purchase_item i JOIN purchase_order o ON o.id=i.purchase_id WHERE o.status='IN_STOCK' AND i.batch_no IS NOT NULL AND i.stock_qty&gt;0 AND (i.manages_expiry=0 OR i.expiry_date&gt;=#{today}) GROUP BY i.product_id) b ON b.product_id=p.id WHERE p.enabled=1 AND p.can_sell=1
+    <if test="query.keyword != ''">AND (CONVERT(p.code USING utf8mb4) LIKE CONCAT('%',#{query.keyword},'%') OR p.name LIKE CONCAT('%',#{query.keyword},'%') OR CONVERT(p.barcode USING utf8mb4)=#{query.keyword})</if>
+    <if test="query.categoryId != null">AND p.category_id=#{query.categoryId}</if><if test="query.enabled != null">AND p.enabled=#{query.enabled}</if><if test="query.managesExpiry != null">AND p.manages_expiry=#{query.managesExpiry}</if><if test="query.canPurchase != null">AND p.can_purchase=#{query.canPurchase}</if><if test="query.canSell != null">AND p.can_sell=#{query.canSell}</if>
+    ORDER BY p.created_at DESC,p.id DESC LIMIT #{query.pageSize} OFFSET #{query.offset}
+  </select>
+  <select id="saleLookupCount" resultType="long">SELECT COUNT(*) FROM product p WHERE p.enabled=1 AND p.can_sell=1 <include refid="filters"/></select>
+</mapper>

@@ -1,0 +1,15 @@
+# Copy to backend/application-local.yml (gitignored), then enter local values.
+spring:
+  datasource:
+    username: root
+    password: "replace-with-local-password"
+app:
+  ai:
+    # Optional: 32 random bytes encoded as Base64. Otherwise an owner-only local key file is created.
+    config-master-key: ${AI_CONFIG_MASTER_KEY:}
+    config-master-file: ${AI_CONFIG_MASTER_FILE:.local/secrets/ai-master.key}
+    # Optional: use DASHSCOPE_API_KEY or point to a UTF-8 file outside version control.
+    key-file: ""
+    model: qwen-plus
+    timeout-seconds: 15
+  jwt-secret: "replace-with-a-random-secret-at-least-32-bytes"

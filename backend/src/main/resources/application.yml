@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: supermarket-inventory
+  profiles:
+    default: local
+  datasource:
+    url: ${DB_URL:jdbc:mysql://127.0.0.1:3306/supermarket_inventory?connectionTimeZone=%2B08:00&forceConnectionTimeZoneToSession=true&characterEncoding=UTF-8}
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD:}
+    hikari:
+      connection-init-sql: SET SESSION time_zone = '+08:00', SESSION wait_timeout = 120, SESSION innodb_lock_wait_timeout = 10
+      keepalive-time: 30000
+      data-source-properties:
+        connectTimeout: 5000
+        socketTimeout: 15000
+        tcpKeepAlive: true
+        # Spring changes transaction state through JDBC; avoid extra per-statement state reads.
+        useLocalSessionState: true
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 3MB
+server:
+  address: ${SERVER_ADDRESS:127.0.0.1}
+  port: ${SERVER_PORT:8080}
+  error:
+    include-message: never
+    include-stacktrace: never
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath*:mapper/**/*.xml
+app:
+  ai:
+    config-master-key: ${AI_CONFIG_MASTER_KEY:}
+    config-master-file: ${AI_CONFIG_MASTER_FILE:.local/secrets/ai-master.key}
+    api-key: ${DASHSCOPE_API_KEY:}
+    key-file: ${DASHSCOPE_API_KEY_FILE:}
+    model: ${DASHSCOPE_MODEL:qwen-plus}
+    endpoint: ${DASHSCOPE_ENDPOINT:https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions}
+    timeout-seconds: ${DASHSCOPE_TIMEOUT_SECONDS:15}
+  upload-directory: ${UPLOAD_DIR:.local/uploads}
+  jwt-secret: ${JWT_SECRET}
+  token-lifetime: PT2H
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html

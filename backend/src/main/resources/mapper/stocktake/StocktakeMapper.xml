@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supermarket.inventory.stocktake.mapper.StocktakeMapper">
+ <sql id="columns">id,order_no,operator_id,operator_name,status,started_at,submitted_at,reviewed_by,reviewer_name,reviewed_at,rejection_reason,completed_at,closed_by,closed_at,close_reason,remark,row_version</sql>
+ <sql id="scope">AND (#{scope.admin}=TRUE OR operator_id=#{scope.userId})</sql>
+ <select id="find" resultType="com.supermarket.inventory.stocktake.entity.StocktakeOrder">SELECT <include refid="columns"/> FROM stocktake_order WHERE id=#{id} <include refid="scope"/></select>
+ <select id="lock" resultType="com.supermarket.inventory.stocktake.entity.StocktakeOrder">SELECT <include refid="columns"/> FROM stocktake_order WHERE id=#{id} <include refid="scope"/> FOR UPDATE</select>
+ <select id="items" resultType="com.supermarket.inventory.stocktake.entity.StocktakeItem">SELECT id,stocktake_id,batch_item_id,product_id,book_qty,actual_qty,difference_qty,reason_type,reason_note FROM stocktake_item WHERE stocktake_id=#{id} ORDER BY product_id,batch_item_id</select>
+ <select id="itemViews" resultType="com.supermarket.inventory.stocktake.vo.StocktakeItemVO">SELECT CAST(s.id AS CHAR) id,CAST(s.product_id AS CHAR) product_id,b.product_code,b.product_name,b.unit,CAST(s.batch_item_id AS CHAR) batch_item_id,b.batch_no,b.production_date,b.expiry_date,s.book_qty,s.actual_qty,s.difference_qty,s.reason_type,s.reason_note FROM stocktake_item s JOIN purchase_item b ON b.id=s.batch_item_id WHERE s.stocktake_id=#{id} ORDER BY s.product_id,s.batch_item_id</select>
+ <sql id="summaryColumns">CAST(o.id AS CHAR) id,o.order_no,CAST(o.operator_id AS CHAR) operator_id,o.operator_name,o.status,o.started_at,o.submitted_at,o.completed_at,o.row_version,CAST(a.product_count AS SIGNED) product_count,CAST(a.batch_count AS SIGNED) batch_count,CAST(a.counted_count AS SIGNED) counted_count,CAST(a.book_qty AS SIGNED) book_qty,CAST(a.actual_qty AS SIGNED) actual_qty,CAST(a.difference_qty AS SIGNED) difference_qty</sql>
+ <sql id="summaryFrom">FROM stocktake_order o JOIN (SELECT stocktake_id,COUNT(DISTINCT product_id) product_count,COUNT(*) batch_count,COUNT(actual_qty) counted_count,SUM(book_qty) book_qty,CASE WHEN COUNT(*)=COUNT(actual_qty) THEN SUM(actual_qty) ELSE NULL END actual_qty,CASE WHEN COUNT(*)=COUNT(actual_qty) THEN SUM(difference_qty) ELSE NULL END difference_qty FROM stocktake_item GROUP BY stocktake_id) a ON a.stocktake_id=o.id</sql>
+ <select id="summary" resultType="com.supermarket.inventory.stocktake.vo.StocktakeSummaryVO">SELECT <include refid="summaryColumns"/> <include refid="summaryFrom"/> WHERE o.id=#{id}</select>
+ <sql id="filters">WHERE (#{scope.admin}=TRUE OR o.operator_id=#{scope.userId})
+  <if test="q.keyword!=''">AND (o.order_no LIKE CONCAT('%',#{q.keyword},'%') OR EXISTS(SELECT 1 FROM stocktake_item si JOIN purchase_item pi ON pi.id=si.batch_item_id WHERE si.stocktake_id=o.id AND (pi.product_name LIKE CONCAT('%',#{q.keyword},'%') OR pi.product_code LIKE CONCAT('%',#{q.keyword},'%'))))</if>
+  <if test="q.status!=null">AND o.status=#{q.status}</if>
+  <if test="q.startDate!=null">AND o.started_at&gt;=#{q.startDate}</if>
+  <if test="q.endDate!=null">AND o.started_at&lt;DATE_ADD(#{q.endDate},INTERVAL 1 DAY)</if>
+ </sql>
+ <select id="page" resultType="com.supermarket.inventory.stocktake.vo.StocktakeSummaryVO">SELECT <include refid="summaryColumns"/> <include refid="summaryFrom"/> <include refid="filters"/> ORDER BY o.started_at DESC,o.id DESC LIMIT #{q.pageSize} OFFSET #{q.offset}</select>
+ <select id="count" resultType="long">SELECT COUNT(*) FROM stocktake_order o <include refid="filters"/></select>
+ <insert id="create" useGeneratedKeys="true" keyProperty="id">INSERT INTO stocktake_order(order_no,operator_id,operator_name,status,started_at,remark,created_at,updated_at) VALUES(#{orderNo},#{operatorId},#{operatorName},'COUNTING',#{now},#{remark},#{now},#{now})</insert>
+ <insert id="insertItems">INSERT INTO stocktake_item(stocktake_id,batch_item_id,product_id,book_qty) VALUES <foreach collection="batches" item="b" separator=",">(#{id},#{b.id},#{b.productId},#{b.stockQty})</foreach></insert>
+ <update id="transition">UPDATE stocktake_order SET status=#{status},row_version=row_version+1
+  <choose>
+   <when test="status.name()=='PENDING'">,submitted_at=#{now}</when>
+   <when test="status.name()=='REJECTED'">,reviewed_by=#{user.id},reviewer_name=#{user.realName},reviewed_at=#{now},rejection_reason=#{reason}</when>
+   <when test="status.name()=='COMPLETED'">,reviewed_by=#{user.id},reviewer_name=#{user.realName},reviewed_at=#{now},completed_at=#{now},rejection_reason=NULL</when>
+   <when test="status.name()=='CLOSED'">,closed_by=#{user.id},closed_at=#{now},close_reason=#{reason}</when>
+  </choose> WHERE id=#{id}
+ </update>
+</mapper>

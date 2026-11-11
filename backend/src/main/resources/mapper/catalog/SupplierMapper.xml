@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supermarket.inventory.catalog.mapper.SupplierMapper">
+  <sql id="columns">CAST(s.id AS CHAR) id,s.code,s.name,s.contact_name,s.contact_phone,s.address,s.enabled,s.remark,(SELECT COUNT(*) FROM purchase_order p WHERE p.supplier_id=s.id) purchase_count,s.created_at</sql>
+  <sql id="filters"><where>
+    <if test="keyword != ''">AND (CONVERT(s.code USING utf8mb4) LIKE CONCAT('%',#{keyword},'%') OR s.name LIKE CONCAT('%',#{keyword},'%'))</if>
+    <if test="contactName != ''">AND s.contact_name LIKE CONCAT('%',#{contactName},'%')</if>
+    <if test="enabled != null">AND s.enabled=#{enabled}</if>
+  </where></sql>
+  <select id="page" resultType="com.supermarket.inventory.catalog.vo.SupplierVO">SELECT <include refid="columns"/> FROM supplier s <include refid="filters"/> ORDER BY s.created_at DESC,s.id DESC LIMIT #{pageSize} OFFSET #{offset}</select>
+  <select id="count" resultType="long">SELECT COUNT(*) FROM supplier s <include refid="filters"/></select>
+  <select id="find" resultType="com.supermarket.inventory.catalog.vo.SupplierVO">SELECT <include refid="columns"/> FROM supplier s WHERE s.id=#{id}</select>
+</mapper>

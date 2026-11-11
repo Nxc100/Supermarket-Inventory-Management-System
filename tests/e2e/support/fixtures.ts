@@ -1,0 +1,19 @@
+import { expect, type Page } from '../../../frontend/test-support/playwright'
+
+export async function login(page:Page,name:string){await page.goto('/login');await page.getByRole('textbox',{name:'*用户名',exact:true}).fill(name);await page.getByRole('textbox',{name:'*密码',exact:true}).fill('Test123456');await page.getByRole('button',{name:'登录',exact:true}).click();await expect(page.getByRole('heading',{name:/欢迎回来/})).toBeVisible()}
+export async function logout(page:Page){await page.getByRole('button',{name:'退出登录',exact:true}).click();await page.getByRole('dialog').getByRole('button',{name:'退出登录',exact:true}).click();await expect(page).toHaveURL(/\/login/)}
+export async function confirm(page:Page,name:string){const dialog=page.getByRole('dialog').filter({has:page.getByRole('button',{name,exact:true})});await dialog.getByRole('button',{name,exact:true}).click();await expect(dialog).toBeHidden()}
+export async function stockedProduct(page:Page){
+ await login(page,'admin');await page.getByRole('menuitem',{name:'商品档案',exact:true}).click()
+ const suffix=Date.now().toString(),code=`UI_XS_${suffix}`,name=`销售页面商品${suffix.slice(-8)}`,barcode=`69${suffix}`
+ await page.getByRole('button',{name:'新增商品',exact:true}).click();const product=page.getByRole('dialog',{name:'新增商品',exact:true})
+ await product.getByRole('textbox',{name:'*商品编码',exact:true}).fill(code);await product.getByRole('textbox',{name:'*商品名称',exact:true}).fill(name);await product.getByRole('textbox',{name:'条码',exact:false}).fill(barcode)
+ await product.getByRole('combobox',{name:'*商品分类',exact:true}).click();await page.getByRole('option',{name:'饮料乳品',exact:true}).click()
+ await product.getByRole('textbox',{name:'参考进价（元）',exact:true}).fill('3.00');await product.getByRole('textbox',{name:'*销售单价（元）',exact:true}).fill('5.00');await product.getByRole('button',{name:'保存商品',exact:true}).click();await expect(product).toBeHidden()
+ await page.getByRole('menuitem',{name:'采购单管理',exact:true}).click();await page.getByRole('button',{name:'新建采购',exact:true}).click();await page.getByRole('button',{name:'选择供应商',exact:true}).click()
+ const suppliers=page.getByRole('dialog',{name:'选择启用供应商',exact:true});await suppliers.getByRole('textbox',{name:'供应商关键词',exact:true}).fill('本地综合供应商');await suppliers.getByRole('button',{name:'搜索供应商',exact:true}).click();await suppliers.getByRole('row').filter({hasText:'SUP001'}).getByRole('button',{name:'选择供应商',exact:true}).click()
+ await page.getByRole('button',{name:'添加商品',exact:true}).click();const picker=page.getByRole('dialog',{name:'添加采购商品',exact:true});await picker.getByRole('textbox',{name:'选品关键词',exact:true}).fill(code);await picker.getByRole('button',{name:'搜索商品',exact:true}).click();await picker.getByRole('button',{name:'添加此商品',exact:true}).click()
+ await page.getByRole('spinbutton',{name:'第1行采购数量',exact:true}).fill('5');let releaseTime:()=>void=()=>{};let timeStarted:()=>void=()=>{};const timeGate=new Promise<void>(resolve=>releaseTime=resolve),timeRequest=new Promise<void>(resolve=>timeStarted=resolve);await page.route('**/api/v1/purchases/context',async route=>{timeStarted();await timeGate;await route.continue()});await page.getByRole('button',{name:'登记到货',exact:true}).click();await timeRequest;try{await expect(page.getByRole('button',{name:'保存草稿',exact:true})).toBeDisabled()}finally{releaseTime()}await expect(page.getByRole('button',{name:'保存草稿',exact:true})).toBeEnabled();await page.unroute('**/api/v1/purchases/context');await page.getByRole('spinbutton',{name:'第1行实收数量',exact:true}).fill('5');await page.getByRole('button',{name:'保存草稿',exact:true}).click()
+ await page.getByRole('button',{name:'提交入库审核',exact:true}).click();await confirm(page,'提交入库审核');await expect(page.getByText('待审核',{exact:true})).toBeVisible();await page.getByRole('button',{name:'审核通过并入库',exact:true}).click();await confirm(page,'审核通过并入库');await expect(page.getByText('已入库',{exact:true})).toBeVisible();await logout(page)
+ return {code,name,barcode}
+}

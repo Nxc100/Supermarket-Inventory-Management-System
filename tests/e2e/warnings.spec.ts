@@ -1,0 +1,26 @@
+import { test, expect } from '../../frontend/test-support/playwright'
+import { login, logout, stockedProduct } from './support/fixtures'
+
+test('warning thresholds, purchaser prefill and cashier denial use real UI state', async ({ page }) => {
+ test.setTimeout(180000)
+ const product = await stockedProduct(page)
+ await login(page, 'admin'); await page.getByRole('menuitem', { name: '商品档案', exact: true }).click()
+ await page.getByRole('textbox', { name: '商品关键词', exact: true }).fill(product.code); await page.getByRole('button', { name: '查询', exact: true }).click()
+ await page.getByRole('row').filter({hasText: product.code}).getByRole('button', { name: '编辑', exact: true }).click()
+ const editor=page.getByRole('dialog', { name: '编辑商品', exact: true })
+ await editor.getByRole('spinbutton', { name: '*库存下限', exact: true }).fill('5'); await editor.getByRole('button', { name: '保存商品', exact: true }).click(); await expect(editor).toBeHidden()
+ await page.getByRole('menuitem', { name: '库存预警', exact: true }).click(); await page.getByRole('textbox', { name: '预警关键词', exact: true }).fill(product.code); await page.getByRole('button', { name: '查询预警', exact: true }).click()
+ await expect(page.getByRole('row').filter({hasText: product.code})).toContainText('5 件')
+ await page.getByRole('button', { name: '阈值设置', exact: true }).click(); await expect(page.getByRole('textbox', { name: '商品关键词', exact: true })).toHaveValue(product.code)
+ await logout(page); await login(page, 'buyer01'); await page.getByRole('menuitem', { name: '库存预警', exact: true }).click(); await page.getByRole('textbox', { name: '预警关键词', exact: true }).fill(product.code); await page.getByRole('button', { name: '查询预警', exact: true }).click()
+ await expect(page.getByRole('button', { name: '阈值设置', exact: true })).toHaveCount(0)
+ await page.getByRole('row').filter({hasText: product.code}).getByRole('button', { name: '新建采购', exact: true }).click()
+ await expect(page.getByRole('heading', { name: '新建采购单', exact: true })).toBeVisible(); await expect(page.getByRole('spinbutton', { name: '第1行采购数量', exact: true })).toHaveValue('')
+ await expect(page.getByRole('textbox', { name: '第1行采购单价', exact: true })).toHaveValue(''); await expect(page.getByRole('button', { name: '选择供应商', exact: true })).toBeVisible(); await expect(page.locator('main')).toContainText(product.code)
+ await page.getByRole('menuitem', { name: '库存预警', exact: true }).click(); await page.getByRole('tab', { name: '过期商品', exact: true }).click(); await page.getByRole('textbox', { name: '预警关键词', exact: true }).fill('P0004'); await page.getByRole('button', { name: '查询预警', exact: true }).click()
+ const expired=page.getByRole('row').filter({hasText: 'P0004'}); await expect(expired).toContainText('禁售'); await expired.getByRole('button', { name: '发起盘点', exact: true }).click()
+ await expect(page.getByRole('heading', { name: '新建盘点', exact: true })).toBeVisible(); await expect(page.getByRole('heading', { name: '本次范围 · 1 种', exact: true })).toBeVisible()
+ await page.getByRole('button', { name: '开始盘点', exact: true }).click(); await page.getByRole('dialog', { name: '开始盘点', exact: true }).getByRole('button', { name: '取消', exact: true }).click()
+ await page.getByRole('menuitem', { name: '库存预警', exact: true }).click(); await page.getByRole('dialog', { name: '离开页面', exact: true }).getByRole('button', { name: '确认离开', exact: true }).click()
+ await logout(page); await login(page, 'cashier01'); await expect(page.getByRole('menuitem', { name: '库存预警', exact: true })).toHaveCount(0); await page.goto('/inventory/warnings'); await expect(page.locator('main').getByText('访问受限', { exact: true })).toBeVisible()
+})

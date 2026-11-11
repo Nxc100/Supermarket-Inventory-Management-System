@@ -1,0 +1,136 @@
+:root {
+  font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+  color: #25372f;
+  font-size: 14px;
+  --el-color-primary: #166c56;
+  --el-color-primary-light-3: #589985;
+  --el-color-primary-light-5: #8db7a9;
+  --el-color-primary-light-7: #bad4cb;
+  --el-color-primary-light-9: #edf5f1;
+  --el-color-primary-dark-2: #0d5442;
+  --el-color-success: #308564;
+  --el-border-radius-base: 6px;
+  --el-text-color-primary: #25372f;
+  --page-bg: #f4f6f3;
+  --surface: #fff;
+  --border: #e4e9e3;
+  --muted: #748078;
+  --space: 24px;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--page-bg);
+}
+button,
+input {
+  font: inherit;
+}
+a {
+  color: var(--el-color-primary);
+  text-decoration: none;
+}
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+h1 {
+  font-size: 24px;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+h2 {
+  font-size: 18px;
+}
+.page-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 16px;
+}
+.page-heading p {
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.7;
+}
+.panel {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  padding: 24px;
+}
+.query-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.query-bar .el-input {
+  width: 260px;
+}
+.query-bar .el-select {
+  width: 140px;
+}
+.table-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding-top: 20px;
+  color: var(--muted);
+}
+.el-table {
+  --el-table-header-bg-color: #f6f8f5;
+  --el-table-border-color: #e9ede7;
+}
+.el-table th.el-table__cell {
+  font-weight: 500;
+  color: #657268;
+}
+.el-table .el-table__cell {
+  padding: 14px 0;
+}
+.el-dialog {
+  max-width: calc(100vw - 32px);
+}
+.archive-editor-dialog {
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+}
+.archive-editor-dialog .el-dialog__body {
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+.archive-editor-dialog .el-dialog__header,
+.archive-editor-dialog .el-dialog__footer {
+  flex-shrink: 0;
+}
+.muted {
+  color: var(--muted);
+}
+.eyebrow {
+  color: #829287;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+@media (max-width: 900px) {
+  :root {
+    --space: 16px;
+  }
+  .panel {
+    padding: 16px;
+  }
+  .table-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

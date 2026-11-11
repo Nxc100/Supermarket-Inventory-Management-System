@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supermarket.inventory.catalog.mapper.CategoryMapper">
+  <sql id="filters"><where>
+    <if test="keyword != ''">AND (CONVERT(c.code USING utf8mb4) LIKE CONCAT('%',#{keyword},'%') OR c.name LIKE CONCAT('%',#{keyword},'%'))</if>
+    <if test="enabled != null">AND c.enabled=#{enabled}</if>
+  </where></sql>
+  <select id="page" resultType="com.supermarket.inventory.catalog.vo.CategoryVO">
+    SELECT CAST(c.id AS CHAR) id,c.code,c.name,c.sort_order,c.enabled,
+      (SELECT COUNT(*) FROM product p WHERE p.category_id=c.id) product_count,c.created_at
+    FROM category c <include refid="filters"/> ORDER BY c.created_at DESC,c.id DESC
+    LIMIT #{pageSize} OFFSET #{offset}
+  </select>
+  <select id="count" resultType="long">SELECT COUNT(*) FROM category c <include refid="filters"/></select>
+</mapper>

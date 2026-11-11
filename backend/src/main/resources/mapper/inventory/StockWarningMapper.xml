@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.supermarket.inventory.inventory.mapper.StockWarningMapper">
+ <sql id="saleable"><include refid="com.supermarket.inventory.inventory.mapper.StockReadMapper.saleable"/></sql>
+ <sql id="tables"><include refid="com.supermarket.inventory.inventory.mapper.StockReadMapper.stockTables"/>
+  <if test="query.type.name()!='LOW'">JOIN purchase_item i ON i.product_id=p.id JOIN purchase_order o ON o.id=i.purchase_id</if>
+ </sql>
+ <sql id="filters">WHERE 1=1
+  <if test="query.productId!=null">AND p.id=#{query.productId}</if><if test="query.enabled!=null">AND p.enabled=#{query.enabled}</if>
+  <if test="query.keyword!=''">AND (CONVERT(p.code USING utf8mb4) LIKE CONCAT('%',#{query.keyword},'%') OR p.name LIKE CONCAT('%',#{query.keyword},'%') OR CONVERT(p.barcode USING utf8mb4)=#{query.keyword}<if test="query.type.name()!='LOW'"> OR CONVERT(i.batch_no USING utf8mb4) LIKE CONCAT('%',#{query.keyword},'%')</if>)</if>
+  <if test="query.categoryId!=null">AND p.category_id=#{query.categoryId}</if>
+  <choose><when test="query.type.name()=='LOW'">AND p.enabled=1 AND p.can_sell=1 AND (<include refid="saleable"/>)&lt;=p.stock_lower_limit</when>
+   <otherwise>AND i.manages_expiry=1 AND i.batch_no IS NOT NULL AND i.stock_qty&gt;0 AND o.status='IN_STOCK'
+    <choose><when test="query.type.name()=='NEAR'">AND DATEDIFF(i.expiry_date,#{today}) BETWEEN 0 AND p.near_expiry_days</when><otherwise>AND i.expiry_date&lt;#{today}</otherwise></choose>
+   </otherwise></choose>
+ </sql>
+ <select id="page" resultType="com.supermarket.inventory.inventory.vo.StockWarningVO">SELECT CAST(p.id AS CHAR) product_id,p.code,p.name,c.name category_name,p.unit,p.enabled,p.can_purchase,p.can_sell,p.frozen_stocktake_id IS NOT NULL frozen,p.stock_qty book_qty,<include refid="saleable"/> saleable_qty,p.stock_lower_limit,p.near_expiry_days,
+  <choose><when test="query.type.name()=='LOW'">NULL batch_item_id,NULL batch_no,NULL production_date,NULL expiry_date,NULL remaining_days,<include refid="saleable"/> quantity</when>
+  <otherwise>CAST(i.id AS CHAR) batch_item_id,i.batch_no,i.production_date,i.expiry_date,DATEDIFF(i.expiry_date,#{today}) remaining_days,i.stock_qty quantity</otherwise></choose>
+  <include refid="tables"/><include refid="filters"/>
+  <choose><when test="query.type.name()=='LOW'">ORDER BY saleable_qty,p.id</when><otherwise>ORDER BY i.expiry_date,i.id</otherwise></choose> LIMIT #{query.pageSize} OFFSET #{query.offset}
+ </select>
+ <select id="count" resultType="long">SELECT COUNT(*) <include refid="tables"/><include refid="filters"/></select>
+</mapper>
