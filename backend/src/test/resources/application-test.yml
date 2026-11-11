@@ -3,5 +3,9 @@ spring:
     url: ${TEST_DB_URL:jdbc:mysql://127.0.0.1:3306/supermarket_inventory_test?connectionTimeZone=%2B08:00&forceConnectionTimeZoneToSession=true&characterEncoding=UTF-8}
     username: ${DB_USER:root}
     password: ${DB_PASSWORD:}
+    hikari:
+      maximum-pool-size: 4
+      minimum-idle: 1
+      idle-timeout: 30000
 app:
   jwt-secret: test-only-secret-for-isolated-integration-tests-2026
