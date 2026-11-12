@@ -196,15 +196,18 @@ async function submit() {
   align-items: center;
   justify-content: center;
   background: #fafbf8;
-  padding: 40px;
+  padding: 56px 40px 96px;
   position: relative;
 }
 .login-card {
   width: 100%;
-  max-width: 360px;
+  max-width: 440px;
+  font-size: 16px;
+  --el-font-size-base: 16px;
+  --el-component-size-large: 48px;
 }
 .login-card h2 {
-  font-size: 28px;
+  font-size: clamp(32px, 3vw, 36px);
   margin-bottom: 12px;
   font-weight: 500;
 }
@@ -214,10 +217,18 @@ async function submit() {
 }
 .login-submit {
   width: 100%;
+  min-height: 48px;
+  font-size: 16px;
   margin-top: 12px;
 }
+.login-card :deep(.el-form-item__label) {
+  font-size: 15px;
+}
+.login-card :deep(.el-input__inner) {
+  font-size: 16px;
+}
 .login-help {
-  font-size: 12px;
+  font-size: 13px;
   color: #939c94;
   line-height: 1.8;
   margin-top: 24px;
@@ -240,7 +251,7 @@ async function submit() {
   }
   .login-form-area {
     min-height: 100vh;
-    padding: 24px;
+    padding: 40px 24px 88px;
   }
 }
 </style>

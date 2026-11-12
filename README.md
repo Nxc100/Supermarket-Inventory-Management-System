@@ -32,6 +32,12 @@ Spring Boot 单体后端 + Vue 桌面管理前端。[权威需求](doc/超市进
 
 访问 `http://127.0.0.1:5173`；后端默认绑定127.0.0.1:8080（可用SERVER_ADDRESS/SERVER_PORT调整），通过Vite同源代理访问。`npm run build`后可用`npm run preview`在`http://127.0.0.1:4173`检查打包产物，代理与开发环境一致。头像存放在后端工作目录的 `.local/uploads`，可通过 `UPLOAD_DIR` 更改；数据库仅保存相对文件名，`/media` 提供经过解码校验的图片。接口文档 `http://127.0.0.1:8080/swagger-ui.html`。账号为 SQL 自带的 `admin`、`buyer01`、`cashier01`、`cashier02`，初始密码 `Test123456`；密码与数据库账号密码无关。
 
+### 商品和头像图片初始化
+
+项目已包含14张商品示意照片、8张头像照片及来源清单，运行时从本地`/media`读取，不依赖外链。新空库导入唯一SQL前，先运行`python -m pip install -r scripts/requirements-media.txt`和`python scripts/initialize-media.py --install-only`安装图片。SQL已包含对应的相对路径及真实图片元数据。
+
+已有业务库补图时，设置`DB_PASSWORD`后运行`python scripts/initialize-media.py --database supermarket_inventory`预览，再增加`--apply`执行。它只补全已知演示商品及账号的空图、历史占位路径或丢失文件，保留有效上传图片，不更改库存、单据或权限；修改前的图片列备份保存于`.local/media-initialization/`。自定义`UPLOAD_DIR`时使用同一个绝对目录，或显式传`--upload-dir`。详见[图片素材与部署说明](doc/数据库/media/README.md)。不要向已有库重导包含删表语句的初始化SQL。
+
 后端监听地址变化时，在启动Vite的终端设置`BACKEND_PROXY_TARGET`为同一个后端地址（默认`http://127.0.0.1:8080`）。例如后端`SERVER_ADDRESS=::1`、`SERVER_PORT=8082`时，前端设`BACKEND_PROXY_TARGET=http://[::1]:8082`。它只由开发/预览进程读取，不注入浏览器包；修改后重启相应Vite实例。普通与AI代理各有独立4连接池，空闲25秒，异常连接销毁，不自动重发业务写。IPv6对照也曾出现本机连接失败，不将切换地址当作已修复根因。
 
 数据库连接采用标准Hikari：最多10条、最少2条空闲，连接寿命90秒，小于会话空闲超时120秒，空闲回收60秒、保活30秒；借连接5秒、验证2秒、JDBC连接5秒/读取15秒。测试每池最多4条、最少1条空闲，Spring测试上下文缓存最多4个，淘汰时关闭连接池。长事务不会被maxLifetime强行中断，业务仍须保持短事务。

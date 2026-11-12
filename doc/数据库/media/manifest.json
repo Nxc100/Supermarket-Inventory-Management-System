@@ -1,0 +1,402 @@
+{
+  "version": 1,
+  "description": "本地演示图片；用于类别示意，不表示商品实际品牌或包装。已有上传图片不覆盖。",
+  "assets": [
+    {
+      "key": "drink",
+      "kind": "product",
+      "label": "瓶装橙汁",
+      "source_url": "https://www.pexels.com/photo/5946790/",
+      "download_url": "https://images.pexels.com/photos/5946790/pexels-photo-5946790.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "license_url": "https://www.pexels.com/license/",
+      "product_codes": [
+        "P0001",
+        "HX_DRINK_500"
+      ],
+      "file": "dfac9770-c5c4-5b5b-a19b-e26c9372888f.jpg",
+      "mime": "image/jpeg",
+      "size": 136772,
+      "width": 1200,
+      "height": 1800,
+      "sha256": "d8141ea648d11b883dcc253fc5a2793a144e1c3bb0cc075181c72f7e12da4099"
+    },
+    {
+      "key": "milk",
+      "kind": "product",
+      "label": "纯牛奶",
+      "source_url": "https://www.pexels.com/photo/5946733/",
+      "download_url": "https://images.pexels.com/photos/5946733/pexels-photo-5946733.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "license_url": "https://www.pexels.com/license/",
+      "product_codes": [
+        "P0002",
+        "HX_MILK_250"
+      ],
+      "file": "43c5bb41-a9db-5686-b072-daa7c1cd2c69.jpg",
+      "mime": "image/jpeg",
+      "size": 113014,
+      "width": 1200,
+      "height": 1800,
+      "sha256": "3ff7722189808f5f80330c2cd91a86a6a7f6da09be6f22d982484b48a3ba72ee"
+    },
+    {
+      "key": "yogurt",
+      "kind": "product",
+      "label": "酸奶",
+      "source_url": "https://www.pexels.com/photo/10809259/",
+      "download_url": "https://images.pexels.com/photos/10809259/pexels-photo-10809259.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "license_url": "https://www.pexels.com/license/",
+      "product_codes": [
+        "P0003"
+      ],
+      "file": "e1b1a95b-32b7-5509-8b84-62cd1925886a.jpg",
+      "mime": "image/jpeg",
+      "size": 113365,
+      "width": 1200,
+      "height": 1797,
+      "sha256": "b5b31200430b86f4752cd42a0b838decba26d07e10f103fc1dfeeaa91906495d"
+    },
+    {
+      "key": "bread",
+      "kind": "product",
+      "label": "面包",
+      "source_url": "https://www.pexels.com/photo/11214715/",
+      "download_url": "https://images.pexels.com/photos/11214715/pexels-photo-11214715.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "license_url": "https://www.pexels.com/license/",
+      "product_codes": [
+        "P0004",
+        "P0018",
+        "P0019",
+        "P0020",
+        "P0024",
+        "HX_BREAD_80"
+      ],
+      "file": "58ca9274-94cc-5f49-beb3-53d6c3e6dfe2.jpg",
+      "mime": "image/jpeg",
+      "size": 273102,
+      "width": 1200,
+      "height": 1600,
+      "sha256": "a18da4c1b2626d45e1ebba7f8ed232fd353d8d663307ba14c528edaeeaf3a0f9"
+    },
+    {
+      "key": "rice",
+      "kind": "product",
+      "label": "大米",
+      "source_url": "https://www.pexels.com/photo/7779908/",
+      "download_url": "https://images.pexels.com/photos/7779908/pexels-photo-7779908.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "license_url": "https://www.pexels.com/license/",
+      "product_codes": [
+        "P0005",
+        "HX_RICE_5KG"
+      ],
+      "file": "54737c4a-31a9-5d49-9610-60adfcd5cc1a.jpg",
+      "mime": "image/jpeg",
+      "size": 101685,
+      "width": 1200,
+      "height": 800,
+      "sha256": "7286149b3b52d106b9e16cacaecf7fe50b01d21f3aae16e8409303f112933f27"
+    },
+    {
+      "key": "oil",
+      "kind": "product",
+      "label": "食用油",
+      "source_url": "https://www.pexels.com/photo/6213754/",
+      "download_url": "https://images.pexels.com/photos/6213754/pexels-photo-6213754.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "license_url": "https://www.pexels.com/license/",
+      "product_codes": [
+        "P0006"
+      ],
+      "file": "121f0b1f-c972-526a-afb8-ee04faf69790.jpg",
+      "mime": "image/jpeg",
+      "size": 344417,
+      "width": 1200,
+      "height": 1800,
+      "sha256": "d82a87c83fdcb7bbe496f4aa1d345cd2d8e08a23a6fbfc83ea0a6eb25acdf9d1"
+    },
+    {
+      "key": "tissue",
+      "kind": "product",
+      "label": "抽纸",
+      "source_url": "https://www.pexels.com/photo/35539861/",
+      "download_url": "https://images.pexels.com/photos/35539861/pexels-photo-35539861.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "license_url": "https://www.pexels.com/license/",
+      "product_codes": [
+        "P0007",
+        "HX_TISSUE_3P"
+      ],
+      "file": "7d26380d-2202-573f-a2e5-8cb39ab31b46.jpg",
+      "mime": "image/jpeg",
+      "size": 133342,
+      "width": 1200,
+      "height": 900,
+      "sha256": "4fd23941f13e5579621a5683626852efa6347c6b92b96658c28dfb409e3d7069"
+    },
+    {
+      "key": "soap",
+      "kind": "product",
+      "label": "香皂",
+      "source_url": "https://www.pexels.com/photo/8285564/",
+      "download_url": "https://images.pexels.com/photos/8285564/pexels-photo-8285564.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "license_url": "https://www.pexels.com/license/",
+      "product_codes": [
+        "P0008",
+        "P0013",
+        "P0014",
+        "P0015",
+        "P0023",
+        "HX_SOAP_100"
+      ],
+      "file": "2bcab468-83a1-547e-bbba-4063b06f604e.jpg",
+      "mime": "image/jpeg",
+      "size": 81025,
+      "width": 1200,
+      "height": 1800,
+      "sha256": "2d19917ac7327fa04f219cc9c5b3aa44692e6fa122694375c4b03e3833762aaf"
+    },
+    {
+      "key": "water",
+      "kind": "product",
+      "label": "饮用水",
+      "source_url": "https://www.pexels.com/photo/11860563/",
+      "download_url": "https://images.pexels.com/photos/11860563/pexels-photo-11860563.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "license_url": "https://www.pexels.com/license/",
+      "product_codes": [
+        "P0009",
+        "HX_WATER_550"
+      ],
+      "file": "30e32958-e18d-5ff4-9e85-61064db5893d.jpg",
+      "mime": "image/jpeg",
+      "size": 86967,
+      "width": 1200,
+      "height": 1800,
+      "sha256": "204bfce51688784c2499ad979cf3d922cad72e791cda43ddbdc9ee7db671c831"
+    },
+    {
+      "key": "pen",
+      "kind": "product",
+      "label": "文具笔",
+      "source_url": "https://www.pexels.com/photo/5952015/",
+      "download_url": "https://images.pexels.com/photos/5952015/pexels-photo-5952015.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "license_url": "https://www.pexels.com/license/",
+      "product_codes": [
+        "P0010",
+        "HX_PEN_05"
+      ],
+      "file": "e46c82e2-40b0-5d4f-96bf-4d579932ea94.jpg",
+      "mime": "image/jpeg",
+      "size": 45416,
+      "width": 1200,
+      "height": 800,
+      "sha256": "7ef0adbc1f845cf463f0caed0acbaa5167bbfd27bd085342e02a245865287021"
+    },
+    {
+      "key": "noodles",
+      "kind": "product",
+      "label": "方便面",
+      "source_url": "https://www.pexels.com/photo/6940984/",
+      "download_url": "https://images.pexels.com/photos/6940984/pexels-photo-6940984.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "license_url": "https://www.pexels.com/license/",
+      "product_codes": [
+        "P0011",
+        "HX_NOODLE_5P"
+      ],
+      "file": "bdc4ba25-9153-5941-878a-7aacbc209d8e.jpg",
+      "mime": "image/jpeg",
+      "size": 286470,
+      "width": 1200,
+      "height": 1800,
+      "sha256": "9f793091880a1c04e832409b235ffe13f597e2f2b1c2bfeddaa4e124deaf137a"
+    },
+    {
+      "key": "crackers",
+      "kind": "product",
+      "label": "饼干",
+      "source_url": "https://www.pexels.com/photo/31617910/",
+      "download_url": "https://images.pexels.com/photos/31617910/pexels-photo-31617910.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "license_url": "https://www.pexels.com/license/",
+      "product_codes": [
+        "P0012",
+        "HX_BISCUIT_100"
+      ],
+      "file": "2ecc72fc-ea47-51c5-b013-55673745e638.jpg",
+      "mime": "image/jpeg",
+      "size": 312108,
+      "width": 1200,
+      "height": 1461,
+      "sha256": "ce35205c742819f087275de160c4bcd8963807b0ed54a69e4b4e48c4859f1979"
+    },
+    {
+      "key": "notebook",
+      "kind": "product",
+      "label": "笔记本",
+      "source_url": "https://www.pexels.com/photo/5594320/",
+      "download_url": "https://images.pexels.com/photos/5594320/pexels-photo-5594320.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "license_url": "https://www.pexels.com/license/",
+      "product_codes": [
+        "P0016",
+        "P0017",
+        "P0021",
+        "P0022",
+        "HX_NOTE_A5"
+      ],
+      "file": "5d727db2-e392-5df2-b4a3-1bd43477b7d2.jpg",
+      "mime": "image/jpeg",
+      "size": 111715,
+      "width": 1200,
+      "height": 1800,
+      "sha256": "3ea79532f3f4dcc152bdb4bdea7cc40a70673aaa678c0ac1efb5e113993d2049"
+    },
+    {
+      "key": "detergent",
+      "kind": "product",
+      "label": "洗衣液",
+      "source_url": "https://www.pexels.com/photo/5218021/",
+      "download_url": "https://images.pexels.com/photos/5218021/pexels-photo-5218021.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "license_url": "https://www.pexels.com/license/",
+      "product_codes": [
+        "HX_DETERGENT_1KG"
+      ],
+      "file": "2d02cd03-1295-5d5e-bee7-c653e4d1aa80.jpg",
+      "mime": "image/jpeg",
+      "size": 167152,
+      "width": 1200,
+      "height": 1800,
+      "sha256": "077400f87c5b1a99181fee709445454d5e0974bd42ccc88082f275a190c67f27"
+    },
+    {
+      "key": "avatar-1",
+      "kind": "avatar",
+      "label": "演示头像 1",
+      "source_url": "https://www.pexels.com/photo/220453/",
+      "download_url": "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=800&h=800&fit=crop&crop=faces",
+      "license_url": "https://www.pexels.com/license/",
+      "usernames": [
+        "admin"
+      ],
+      "file": "482894fd-768d-58c0-af15-cbcf6676dd81.jpg",
+      "mime": "image/jpeg",
+      "size": 53624,
+      "width": 800,
+      "height": 800,
+      "sha256": "87a8d1457874fe1ccd46e252dac1ae7261c9534de9fe4e15391d5a1cbdea39c4"
+    },
+    {
+      "key": "avatar-2",
+      "kind": "avatar",
+      "label": "演示头像 2",
+      "source_url": "https://www.pexels.com/photo/415829/",
+      "download_url": "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=800&h=800&fit=crop&crop=faces",
+      "license_url": "https://www.pexels.com/license/",
+      "usernames": [
+        "admin2"
+      ],
+      "file": "9987e67f-ed37-538b-9575-9f7830c923d1.jpg",
+      "mime": "image/jpeg",
+      "size": 53191,
+      "width": 800,
+      "height": 800,
+      "sha256": "44ab90d879f255330b3d44050892a3cdde33a254a4458aa017d1b81d4e4a0456"
+    },
+    {
+      "key": "avatar-3",
+      "kind": "avatar",
+      "label": "演示头像 3",
+      "source_url": "https://www.pexels.com/photo/614810/",
+      "download_url": "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=800&h=800&fit=crop&crop=faces",
+      "license_url": "https://www.pexels.com/license/",
+      "usernames": [
+        "buyer01"
+      ],
+      "file": "5c4d411a-5905-50b5-98b2-736200d32076.jpg",
+      "mime": "image/jpeg",
+      "size": 42812,
+      "width": 800,
+      "height": 800,
+      "sha256": "eee803e01575dc3eb0bbc0875b262d23d8c1d5091d7388cf5c7ab36d833a476d"
+    },
+    {
+      "key": "avatar-4",
+      "kind": "avatar",
+      "label": "演示头像 4",
+      "source_url": "https://www.pexels.com/photo/774909/",
+      "download_url": "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=800&h=800&fit=crop&crop=faces",
+      "license_url": "https://www.pexels.com/license/",
+      "usernames": [
+        "buyer02"
+      ],
+      "file": "e3ab0093-bc9f-53ac-8d0c-777d3c390294.jpg",
+      "mime": "image/jpeg",
+      "size": 67052,
+      "width": 800,
+      "height": 800,
+      "sha256": "72f420ce106799f07dffe1c3eb42515dc593f397b988cad7cf55b0f647c95535"
+    },
+    {
+      "key": "avatar-5",
+      "kind": "avatar",
+      "label": "演示头像 5",
+      "source_url": "https://www.pexels.com/photo/1239291/",
+      "download_url": "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=800&h=800&fit=crop&crop=faces",
+      "license_url": "https://www.pexels.com/license/",
+      "usernames": [
+        "cashier01"
+      ],
+      "file": "23ca5159-b7b8-59cf-a79b-8fb2ab134412.jpg",
+      "mime": "image/jpeg",
+      "size": 91732,
+      "width": 800,
+      "height": 800,
+      "sha256": "e182ac3ef38ee35a3b3ca407f36584170c8c18da1d2e8452282659a8e61f3307"
+    },
+    {
+      "key": "avatar-6",
+      "kind": "avatar",
+      "label": "演示头像 6",
+      "source_url": "https://www.pexels.com/photo/91227/",
+      "download_url": "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=800&h=800&fit=crop&crop=faces",
+      "license_url": "https://www.pexels.com/license/",
+      "usernames": [
+        "cashier02"
+      ],
+      "file": "6c7b50d6-0830-5dd7-b90b-8373bb1ac6f0.jpg",
+      "mime": "image/jpeg",
+      "size": 65759,
+      "width": 800,
+      "height": 800,
+      "sha256": "c7762781a446090236e654f6466cc5d0a172a4f83444e9bfbef778ad78f5aefb"
+    },
+    {
+      "key": "avatar-7",
+      "kind": "avatar",
+      "label": "演示头像 7",
+      "source_url": "https://www.pexels.com/photo/733872/",
+      "download_url": "https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=800&h=800&fit=crop&crop=faces",
+      "license_url": "https://www.pexels.com/license/",
+      "usernames": [
+        "disabled01"
+      ],
+      "file": "83392ae9-2d11-5d76-88bd-db8522fdb22c.jpg",
+      "mime": "image/jpeg",
+      "size": 76773,
+      "width": 800,
+      "height": 800,
+      "sha256": "6a9824ec47805451ef85666e2b57c00a00343bc4c94e9b2ca31d3244b4e04153"
+    },
+    {
+      "key": "avatar-8",
+      "kind": "avatar",
+      "label": "演示头像 8",
+      "source_url": "https://www.pexels.com/photo/1222271/",
+      "download_url": "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=800&h=800&fit=crop&crop=faces",
+      "license_url": "https://www.pexels.com/license/",
+      "usernames": [
+        "unused01"
+      ],
+      "file": "50b137a5-ecd5-50b3-a98b-73575d24a5f2.jpg",
+      "mime": "image/jpeg",
+      "size": 82380,
+      "width": 800,
+      "height": 800,
+      "sha256": "4523b0fedcac4d0489223a364f75e4a7b726e9467c8345fe6a67529048b6cccb"
+    }
+  ]
+}

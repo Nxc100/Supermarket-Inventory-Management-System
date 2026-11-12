@@ -161,11 +161,12 @@ async function signOut() {
 
 <style scoped>
 .app-shell {
+  --sidebar-width: 248px;
   display: flex;
   min-height: 100vh;
 }
 .sidebar {
-  width: 216px;
+  width: var(--sidebar-width);
   position: fixed;
   inset: 0 auto 0 0;
   background: #fff;
@@ -208,7 +209,7 @@ async function signOut() {
   color: #6d7d70;
   display: flex;
   gap: 8px;
-  font-size: 12px;
+  font-size: 13px;
 }
 .store-label span {
   font-size: 9px;
@@ -229,6 +230,7 @@ async function signOut() {
 .nav-menu .el-menu-item {
   border-radius: 6px;
   height: 46px;
+  font-size: 16px;
   margin-bottom: 6px;
 }
 .nav-menu .el-menu-item.is-active {
@@ -237,7 +239,7 @@ async function signOut() {
 }
 .sidebar-bottom {
   margin-top: auto;
-  font-size: 11px;
+  font-size: 12px;
   color: #79897c;
   padding: 24px 8px 0;
 }
@@ -257,8 +259,8 @@ async function signOut() {
   margin-right: 6px;
 }
 .main-shell {
-  width: calc(100% - 216px);
-  margin-left: 216px;
+  width: calc(100% - var(--sidebar-width));
+  margin-left: var(--sidebar-width);
   display: flex;
   flex-direction: column;
 }
@@ -321,22 +323,17 @@ async function signOut() {
   padding: 0 32px 20px;
 }
 @media (max-width: 1000px) {
-  .sidebar {
-    width: 176px;
-    padding: 24px 12px;
+  .app-shell {
+    --sidebar-width: 216px;
   }
-  .main-shell {
-    margin-left: 176px;
-    width: calc(100% - 176px);
+  .sidebar {
+    padding: 24px 12px;
   }
   .content {
     padding: 24px 16px;
   }
   .topbar {
     padding: 0 16px;
-  }
-  .store-label {
-    font-size: 10px;
   }
   .breadcrumbs > span {
     display: none;
