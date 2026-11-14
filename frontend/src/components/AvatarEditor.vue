@@ -131,7 +131,7 @@ onBeforeUnmount(clear)
 }
 .avatar-editor p {
   margin: 12px 0 0;
-  font-size: 11px;
+  font-size: var(--font-size-caption);
   line-height: 1.8;
 }
 .avatar-preview {

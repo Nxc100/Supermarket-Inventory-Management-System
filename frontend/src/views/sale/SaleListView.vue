@@ -247,18 +247,19 @@ onMounted(initialize)
   border-radius: 8px;
 }
 .sales-totals small {
+  font-size: var(--font-size-body);
   display: block;
   color: #748078;
   margin-bottom: 10px;
 }
 .sales-totals strong {
-  font-size: 21px;
+  font-size: var(--font-size-title);
   color: #315f49;
 }
 .sales-totals p {
   margin: 0 0 0 auto;
   color: #748078;
-  font-size: 12px;
+  font-size: var(--font-size-caption);
   line-height: 1.8;
 }
 </style>

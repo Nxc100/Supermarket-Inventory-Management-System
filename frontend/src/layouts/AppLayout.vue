@@ -265,21 +265,24 @@ async function signOut() {
   flex-direction: column;
 }
 .topbar {
-  height: 76px;
+  min-height: 88px;
   background: #ffffffc9;
   border-bottom: 1px solid var(--border);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 32px;
+  padding: 16px 32px;
   gap: 16px;
+  flex-wrap: wrap;
 }
 .breadcrumbs {
   display: flex;
   align-items: center;
   gap: 14px;
   color: #91a094;
-  font-size: 12px;
+  font-size: var(--font-size-heading);
+  min-width: 0;
+  flex-wrap: wrap;
 }
 .breadcrumbs strong {
   color: #526455;
@@ -291,14 +294,17 @@ async function signOut() {
   align-items: center;
   gap: 12px;
 }
+.account-actions {
+  margin-left: auto;
+}
 .account {
   color: #425745;
-  font-size: 12px;
+  font-size: var(--font-size-body);
 }
 .account small {
   display: block;
   color: #97a195;
-  font-size: 10px;
+  font-size: var(--font-size-caption);
   margin-top: 4px;
 }
 .account .el-avatar {
@@ -310,7 +316,7 @@ async function signOut() {
   margin-left: 8px;
   border-radius: 0;
   gap: 6px;
-  font-size: 12px;
+  font-size: var(--font-size-body);
 }
 .content {
   padding: 32px;
@@ -319,7 +325,7 @@ async function signOut() {
 }
 .app-footer {
   color: #a2aba0;
-  font-size: 10px;
+  font-size: var(--font-size-caption);
   padding: 0 32px 20px;
 }
 @media (max-width: 1000px) {
@@ -333,7 +339,7 @@ async function signOut() {
     padding: 24px 16px;
   }
   .topbar {
-    padding: 0 16px;
+    padding: 16px;
   }
   .breadcrumbs > span {
     display: none;

@@ -35,7 +35,7 @@ const unit = computed(() => (metric.value === 'netAmount' ? '元' : '件基本�
 const monthlyOption = computed<EChartsOption>(() => ({
   color: ['#166c56'],
   tooltip: { trigger: 'axis', renderMode: 'richText' },
-  grid: { left: 65, right: 20, top: 35, bottom: 35 },
+  grid: { left: 20, right: 24, top: 45, bottom: 20, containLabel: true },
   xAxis: { type: 'category', data: pageResult.value?.monthly.map((i) => `${i.month}月`) ?? [] },
   yAxis: { type: 'value', name: unit.value },
   series: [
@@ -49,7 +49,7 @@ const monthlyOption = computed<EChartsOption>(() => ({
 const dailyOption = computed<EChartsOption>(() => ({
   color: ['#589985'],
   tooltip: { trigger: 'axis', renderMode: 'richText' },
-  grid: { left: 65, right: 20, top: 35, bottom: 55 },
+  grid: { left: 20, right: 24, top: 45, bottom: 20, containLabel: true },
   xAxis: {
     type: 'category',
     data: pageResult.value?.daily.map((i) => i.date) ?? [],
@@ -67,7 +67,7 @@ const dailyOption = computed<EChartsOption>(() => ({
 const hotOption = computed<EChartsOption>(() => ({
   color: ['#166c56'],
   tooltip: { trigger: 'axis', renderMode: 'richText' },
-  grid: { left: 150, right: 35, top: 20, bottom: 35 },
+  grid: { left: 20, right: 45, top: 25, bottom: 30, containLabel: true },
   xAxis: { type: 'value', name: '净销量' },
   yAxis: {
     type: 'category',
@@ -409,13 +409,14 @@ onMounted(initialize)
   margin-bottom: 10px;
 }
 .stat-cards strong {
-  font-size: 22px;
+  font-size: var(--font-size-title);
 }
 .chart-title {
   display: flex;
   justify-content: space-between;
   gap: 16px;
   align-items: center;
+  flex-wrap: wrap;
 }
 .section-title {
   margin-top: 32px;

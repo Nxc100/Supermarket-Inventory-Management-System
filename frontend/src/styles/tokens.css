@@ -1,7 +1,22 @@
 :root {
   font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
   color: #25372f;
-  font-size: 14px;
+  --font-size-caption: 14px;
+  --font-size-body: 16px;
+  --font-size-heading: 20px;
+  --font-size-title: 28px;
+  --font-size-metric: 36px;
+  font-size: var(--font-size-body);
+  --el-font-size-extra-large: 24px;
+  --el-font-size-large: var(--font-size-heading);
+  --el-font-size-medium: 18px;
+  --el-font-size-base: var(--font-size-body);
+  --el-font-size-small: var(--font-size-caption);
+  --el-font-size-extra-small: var(--font-size-caption);
+  --el-font-line-height-primary: 26px;
+  --el-component-size-large: 48px;
+  --el-component-size: 40px;
+  --el-component-size-small: 36px;
   --el-color-primary: #166c56;
   --el-color-primary-light-3: #589985;
   --el-color-primary-light-5: #8db7a9;
@@ -23,9 +38,12 @@
 body {
   margin: 0;
   background: var(--page-bg);
+  line-height: 1.6;
 }
 button,
-input {
+input,
+textarea,
+select {
   font: inherit;
 }
 a {
@@ -38,12 +56,17 @@ p {
   margin-top: 0;
 }
 h1 {
-  font-size: 24px;
+  font-size: var(--font-size-title);
   letter-spacing: -0.5px;
   margin-bottom: 8px;
 }
 h2 {
-  font-size: 18px;
+  font-size: var(--font-size-heading);
+}
+small,
+pre,
+code {
+  font-size: var(--font-size-caption);
 }
 .page-heading {
   display: flex;
@@ -51,6 +74,13 @@ h2 {
   justify-content: space-between;
   margin-bottom: 24px;
   gap: 16px;
+}
+.page-heading > :first-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.page-heading > .el-button {
+  flex-shrink: 0;
 }
 .page-heading p {
   color: var(--muted);
@@ -71,10 +101,15 @@ h2 {
   margin-bottom: 20px;
 }
 .query-bar .el-input {
-  width: 260px;
+  width: 300px;
 }
 .query-bar .el-select {
-  width: 140px;
+  width: 180px;
+}
+.query-bar > .el-input,
+.query-bar > .el-select,
+.query-bar > .el-date-editor {
+  max-width: 100%;
 }
 .table-footer {
   display: flex;
@@ -95,7 +130,107 @@ h2 {
 .el-table .el-table__cell {
   padding: 14px 0;
 }
+.el-table .cell {
+  line-height: 1.6;
+}
+.el-table .el-button + .el-button {
+  margin-left: 8px;
+}
+.el-form {
+  --el-form-label-font-size: var(--font-size-body);
+}
+/* Keep fixed-pixel component defaults and body-teleported popups on the same scale. */
+.el-form-item {
+  --font-size: var(--font-size-body);
+}
+.el-input,
+.el-textarea {
+  --el-input-font-size: var(--font-size-body);
+}
+.el-button {
+  --el-button-size: var(--el-component-size);
+  height: var(--el-button-size);
+}
+.el-button--large {
+  --el-button-size: var(--el-component-size-large);
+}
+.el-button--small {
+  --el-button-size: var(--el-component-size-small);
+  font-size: var(--font-size-caption);
+}
+.el-switch__label {
+  font-size: var(--font-size-body);
+}
+.el-input .el-input__count,
+.el-textarea .el-input__count {
+  font-size: var(--font-size-caption);
+}
+.el-select {
+  --el-select-input-font-size: var(--font-size-body);
+}
+.el-select__wrapper {
+  font-size: var(--font-size-body);
+  min-height: var(--el-component-size);
+}
+.el-select__wrapper.is-large {
+  min-height: var(--el-component-size-large);
+}
+.el-select__wrapper.is-small {
+  min-height: var(--el-component-size-small);
+  font-size: var(--font-size-caption);
+}
+.el-descriptions__body .el-descriptions__table .el-descriptions__cell {
+  font-size: var(--font-size-body);
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.el-form-item__error {
+  position: static;
+  flex-basis: 100%;
+  font-size: var(--font-size-caption);
+  line-height: 1.5;
+}
+.el-pagination {
+  --el-pagination-font-size: var(--font-size-body);
+  --el-pagination-button-height: 40px;
+  --el-pagination-button-width: 40px;
+  flex-wrap: wrap;
+  row-gap: 8px;
+}
+.el-pager li {
+  font-size: var(--font-size-body);
+}
+.el-alert {
+  --el-alert-title-font-size: var(--font-size-body);
+  --el-alert-title-with-description-font-size: 18px;
+  --el-alert-description-font-size: var(--font-size-caption);
+}
+.el-tag {
+  --el-tag-font-size: var(--font-size-caption);
+}
+.el-tree {
+  --el-tree-node-content-height: 36px;
+}
+.el-collapse {
+  --el-collapse-header-font-size: var(--font-size-body);
+  --el-collapse-content-font-size: var(--font-size-body);
+}
+.el-collapse-item__header {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  line-height: 1.6;
+}
+.el-date-table,
+.el-month-table,
+.el-year-table,
+.el-time-spinner__item,
+.el-time-panel__btn {
+  font-size: var(--font-size-caption);
+}
 .el-dialog {
+  --el-dialog-content-font-size: var(--font-size-body);
+  --el-dialog-title-font-size: var(--font-size-heading);
+  --el-dialog-font-line-height: 28px;
   max-width: calc(100vw - 32px);
 }
 .archive-editor-dialog {
@@ -117,7 +252,7 @@ h2 {
 }
 .eyebrow {
   color: #829287;
-  font-size: 11px;
+  font-size: var(--font-size-caption);
   text-transform: uppercase;
   letter-spacing: 2px;
   margin-bottom: 12px;
@@ -128,6 +263,9 @@ h2 {
   }
   .panel {
     padding: 16px;
+  }
+  .page-heading {
+    flex-wrap: wrap;
   }
   .table-footer {
     align-items: flex-start;

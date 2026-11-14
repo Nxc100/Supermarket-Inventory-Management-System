@@ -380,11 +380,12 @@ onMounted(load)
   gap: 12px;
 }
 .ai-usage-cards strong {
-  font-size: 30px;
+  font-size: var(--font-size-metric);
   font-weight: 500;
   color: #245441;
 }
 .ai-usage-cards small {
+  font-size: var(--font-size-caption);
   color: #758779;
   line-height: 1.6;
 }

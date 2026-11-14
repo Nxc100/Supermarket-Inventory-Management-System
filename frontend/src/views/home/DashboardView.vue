@@ -88,7 +88,7 @@ onMounted(load)
 }
 .dashboard-time {
   margin-bottom: 20px;
-  font-size: 12px;
+  font-size: var(--font-size-caption);
   line-height: 1.8;
 }
 .metric-grid {
@@ -105,31 +105,32 @@ onMounted(load)
 }
 .metric-label {
   color: #5e7165;
-  font-size: 14px;
+  font-size: var(--font-size-body);
 }
 .metric-value {
   margin: 18px 0 12px;
-  font-size: 34px;
+  font-size: var(--font-size-metric);
+  overflow-wrap: anywhere;
   font-variant-numeric: tabular-nums;
 }
 .metric-value small {
-  font-size: 13px;
+  font-size: var(--font-size-body);
   color: #7c8a80;
 }
 .dashboard-card p {
   color: #758278;
-  font-size: 12px;
-  min-height: 34px;
+  font-size: var(--font-size-caption);
+  min-height: 45px;
   line-height: 1.6;
 }
 .metric-link {
-  font-size: 12px;
+  font-size: var(--font-size-caption);
 }
 .dashboard-shortcuts {
   margin-top: 24px;
 }
 .dashboard-shortcuts h2 {
-  font-size: 20px;
+  font-size: var(--font-size-heading);
   margin: 10px 0 20px;
 }
 .shortcut-links {

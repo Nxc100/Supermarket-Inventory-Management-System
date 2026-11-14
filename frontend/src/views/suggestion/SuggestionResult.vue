@@ -91,7 +91,7 @@ async function copy() {
 .summary-text {
   max-height: 450px;
   overflow: auto;
-  font-size: 13px;
+  font-size: var(--font-size-caption);
   background: #f6f8f5;
   padding: 16px;
 }

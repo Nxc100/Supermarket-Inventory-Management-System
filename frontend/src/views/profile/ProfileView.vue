@@ -210,7 +210,7 @@ async function changePassword() {
   margin-top: 32px;
   padding-top: 24px;
   border-top: 1px solid var(--border);
-  font-size: 12px;
+  font-size: var(--font-size-caption);
   color: #738773;
 }
 .identity-status span {
@@ -223,7 +223,7 @@ async function changePassword() {
 }
 .avatar-note {
   margin-top: 24px;
-  font-size: 11px;
+  font-size: var(--font-size-caption);
 }
 .profile-forms {
   display: grid;

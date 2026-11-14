@@ -93,7 +93,7 @@ const totalAmount = computed(() =>
 <style scoped>
 .stock-warning {
   color: #b65232;
-  font-size: 12px;
+  font-size: var(--font-size-caption);
 }
 .panel {
   margin-top: 24px;

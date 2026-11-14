@@ -42,7 +42,7 @@ function reopen() {
 .navigation-failure p {
   margin: 8px 0 0;
   line-height: 1.7;
-  font-size: 13px;
+  font-size: var(--font-size-caption);
 }
 .navigation-actions {
   display: flex;

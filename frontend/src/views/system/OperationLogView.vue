@@ -214,6 +214,6 @@ onMounted(() => {
 }
 .log-detail h3 {
   margin-top: 24px;
-  font-size: 15px;
+  font-size: var(--font-size-heading);
 }
 </style>

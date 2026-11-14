@@ -143,7 +143,7 @@ onBeforeUnmount(clear)
   margin: 0;
 }
 .muted {
-  font-size: 12px;
+  font-size: var(--font-size-caption);
   margin: 20px 0;
 }
 </style>

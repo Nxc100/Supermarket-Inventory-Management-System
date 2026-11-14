@@ -247,7 +247,7 @@ onMounted(initialize)
   margin-bottom: 10px;
 }
 .inventory-stat-cards strong {
-  font-size: 22px;
+  font-size: var(--font-size-title);
 }
 .inventory-detail-title,
 .warning-links {

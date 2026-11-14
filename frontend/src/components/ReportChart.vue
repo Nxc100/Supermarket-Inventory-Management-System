@@ -26,7 +26,22 @@ function render() {
   }
   if (!chart) {
     if (!container.value.clientWidth) return
-    chart = init(container.value)
+    // Canvas labels do not inherit CSS. Share the page's typography tokens with ECharts.
+    const style = getComputedStyle(container.value)
+    const fontSize = Number.parseFloat(style.fontSize)
+    const captionSize = Number.parseFloat(style.getPropertyValue('--font-size-caption')) || fontSize
+    const axis = {
+      axisLabel: { fontSize: captionSize },
+      nameTextStyle: { fontSize: captionSize },
+    }
+    chart = init(container.value, {
+      textStyle: { fontFamily: style.fontFamily, fontSize },
+      categoryAxis: axis,
+      valueAxis: axis,
+      legend: { textStyle: { fontSize: captionSize } },
+      tooltip: { textStyle: { fontSize } },
+      pie: { label: { fontSize: captionSize, lineHeight: 22 } },
+    })
     chart.on('click', (event: { dataIndex?: number }) => {
       if (typeof event.dataIndex === 'number') emit('datum', event.dataIndex)
     })
@@ -65,7 +80,7 @@ onBeforeUnmount(() => {
 <style scoped>
 .chart-canvas {
   width: 100%;
-  height: 320px;
+  height: 360px;
 }
 .report-chart {
   min-height: 240px;

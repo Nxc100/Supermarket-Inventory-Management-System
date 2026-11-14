@@ -12,7 +12,7 @@ const html = computed(() => renderSuggestionMarkdown(props.content))
 <style scoped>
 .suggestion-markdown {
   color: var(--text-primary, #243c35);
-  font-size: 15px;
+  font-size: var(--font-size-body);
   line-height: 1.95;
   overflow-wrap: anywhere;
   max-width: 100%;
@@ -21,7 +21,7 @@ const html = computed(() => renderSuggestionMarkdown(props.content))
 .suggestion-markdown :deep(h2),
 .suggestion-markdown :deep(h3),
 .suggestion-markdown :deep(h4) {
-  font-size: 17px;
+  font-size: var(--font-size-heading);
   line-height: 1.5;
   margin: 26px 0 10px;
   padding-left: 12px;
@@ -62,7 +62,7 @@ const html = computed(() => renderSuggestionMarkdown(props.content))
 }
 .suggestion-markdown :deep(code) {
   font-family: Consolas, monospace;
-  font-size: 13px;
+  font-size: var(--font-size-caption);
   background: #f3f6f1;
 }
 .suggestion-markdown :deep(table) {
